@@ -8,6 +8,9 @@ class KnowledgeModel:
         self.word = word
         self.meaning = meaning
 
+    def __str__(self) -> str:
+        return f"[<KnowledgeModel> word: {self.word}, meaning: {self.meaning}]"
+
     def get_id(self) -> int:
         return self.id
 

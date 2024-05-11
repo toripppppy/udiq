@@ -2,9 +2,6 @@
 DAO for knowledges
 """
 
-import sys
-sys.path.append("~/db")
-
 from db.db_manager import MariaDBConnector
 from db.models.knowledge_model import KnowledgeModel
 
@@ -24,9 +21,9 @@ class KnowledgesDAO:
 		else:
 			return KnowledgeModel(*result)
 		
-	def find_all(self) -> KnowledgeModel:
+	def find_all(self) -> tuple[KnowledgeModel]:
 		self.execute_sql("SELECT * FROM knowledges")
-		result = tuple([knowledge for knowledge in self.cursor])
+		result = tuple([KnowledgeModel(*knowledge) for knowledge in self.cursor])
 
 		if result == ():
 			return None
