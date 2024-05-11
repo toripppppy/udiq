@@ -8,6 +8,7 @@ from discord.ext import commands
 import random
 
 from db.daos.knowledges_dao import KnowledgesDAO
+import utils
 
 class UdiqCog(commands.Cog):
 	def __init__(self, bot: commands.Bot):
@@ -18,4 +19,4 @@ class UdiqCog(commands.Cog):
 	async def random(self, ctx: commands.Context):
 		knowledges = KnowledgesDAO().find_all()
 		random_knowledge = random.choice(knowledges)
-		await ctx.channel.send(random_knowledge)
+		await ctx.send(embed=utils.create_embed("common", str(random_knowledge)), ephemeral=True)
