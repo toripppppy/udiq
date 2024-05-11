@@ -7,6 +7,7 @@ Cog with basic features of Discord bot
 from discord.ext import commands
 
 import config
+import tools
 
 class MainCog(commands.Cog):
 	def __init__(self, bot: commands.Bot):
@@ -15,7 +16,7 @@ class MainCog(commands.Cog):
 	# help
 	@commands.command(name="help", brief="show help")
 	async def help(self, ctx: commands.Context):
-		await ctx.channel.send("here is help")
+		await ctx.send(embed=tools.create_help_embed(self.bot))
 
 	# on ready
 	@commands.Cog.listener()
