@@ -1,16 +1,11 @@
 import discord
 from discord.ext import commands
 
-from env.config import Config
+import config
 from cogs import MainCog
 
-
-config = Config()
-
-TOKEN = config.token
-
 bot = commands.Bot(
-    command_prefix="udiq" + " ",
+    command_prefix=config.BOT_PREFIX,
     intents=discord.Intents.all(),
     help_command=None
 )
@@ -21,9 +16,6 @@ async def setup_hook():
     await bot.add_cog(MainCog(bot))
 
 def main():
-    try:
-        bot.run(TOKEN)
-    finally:
-        print("Log out : Udiq")
+    bot.run(config.TOKEN)
 
 main()

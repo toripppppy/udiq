@@ -1,5 +1,5 @@
 """
-Load config from .env
+Bot Config
 """
 
 from dotenv import load_dotenv
@@ -7,5 +7,9 @@ import os
 
 load_dotenv()
 
-TOKEN = str(os.getenv("TOKEN"))
-LOG_CHANNEL_ID = str(os.getenv("LOG_CHANNEL_ID"))
+# Setting
+BOT_PREFIX = "udiq" + " "
+
+# from .env
+TOKEN = os.getenv("TOKEN")
+LOG_CHANNEL_ID = os.getenv("LOG_CHANNEL_ID")
