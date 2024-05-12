@@ -16,6 +16,8 @@ async def setup_hook():
     await bot.add_cog(MainCog(bot))
     await bot.add_cog(UdiqCog(bot))
 
+    await bot.tree.sync()
+
 def main():
     bot.run(config.TOKEN)
 
