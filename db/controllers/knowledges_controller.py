@@ -5,11 +5,12 @@ DAO for knowledges
 from db.db_manager import MariaDBConnector
 from db.models.knowledge_model import KnowledgeModel
 
-class KnowledgesDAO:
+class KnowledgesController:
 	def __init__(self) -> None:
 		self.cursor = MariaDBConnector().get_cursor()
 
 	def execute_sql(self, sql: str, params = None) -> None:
+		print(sql)
 		self.cursor.execute(sql, params)
 
 	def find_one_by_id(self, id: int) -> KnowledgeModel | None:
@@ -19,13 +20,18 @@ class KnowledgesDAO:
 		if result == ():
 			return None
 		else:
-			return KnowledgeModel(*result)
+			return KnowledgeModel(*result[1:])
 		
 	def find_all(self) -> tuple[KnowledgeModel] | None:
 		self.execute_sql("SELECT * FROM knowledges")
-		result = tuple([KnowledgeModel(*knowledge) for knowledge in self.cursor])
+		result = tuple([KnowledgeModel(*knowledge[1:]) for knowledge in self.cursor])
 
 		if result == ():
 			return None
 		else:
 			return result
+		
+	def insert_one(self, knowledge: KnowledgeModel) -> None:
+		if knowledge.is_valid():
+			print("ok execute")
+			self.execute_sql(f'INSERT INTO knowledges (word, meaning) VALUES("{knowledge.word}", "{knowledge.meaning}")')
