@@ -53,6 +53,12 @@ class UdiqCog(commands.Cog):
 			print(new_knowledge)
 			self.knowledges_controller.insert_one(new_knowledge)
 
-		embed = discord.Embed(title="まってな")
+		# update local knowledges
+		self.knowledges = self.knowledges_controller.find_all()
+
+		embed = discord.Embed(
+			title=f"Added \"{new_knowledge.word}\"",
+			description=f"{new_knowledge.word}:\n{new_knowledge.meaning}"
+		)
 
 		await ctx.send(embed=embed, ephemeral=True)

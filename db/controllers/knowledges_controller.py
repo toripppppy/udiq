@@ -1,5 +1,5 @@
 """
-DAO for knowledges
+Controller for knowledges
 """
 
 from db.db_manager import MariaDBConnector
@@ -7,7 +7,9 @@ from db.models.knowledge_model import KnowledgeModel
 
 class KnowledgesController:
 	def __init__(self) -> None:
-		self.cursor = MariaDBConnector().get_cursor()
+		self.connector =  MariaDBConnector()
+		self.cursor = self.connector.get_cursor()
+		self.conn = self.connector.get_conn()
 
 	def execute_sql(self, sql: str, params = None) -> None:
 		print(sql)
@@ -32,6 +34,8 @@ class KnowledgesController:
 			return result
 		
 	def insert_one(self, knowledge: KnowledgeModel) -> None:
-		if knowledge.is_valid():
-			print("ok execute")
-			self.execute_sql(f'INSERT INTO knowledges (word, meaning) VALUES("{knowledge.word}", "{knowledge.meaning}")')
+		if knowledge.is_valid() == False: return
+		cursor = self.connector.get_cursor()
+		self.execute_sql(f'INSERT INTO knowledges (word, meaning) VALUES("{knowledge.word}", "{knowledge.meaning}")')
+		cursor.close()
+		self.conn.commit()
