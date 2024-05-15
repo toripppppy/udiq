@@ -9,6 +9,7 @@ from discord.ext import commands
 import random
 
 from db.daos.knowledges_dao import KnowledgesDAO
+from tools.parser import Parser
 
 class UdiqCog(commands.Cog):
 	def __init__(self, bot: commands.Bot):
@@ -22,8 +23,11 @@ class UdiqCog(commands.Cog):
 		# avoid self message
 		if message.author.bot: return
 
+		parser = Parser()
+		message_words = parser.get_words(message.content)
+
 		for kn in self.knowledges:
-			if kn.word in message.content:
+			if kn.word in message_words:
 				embed = discord.Embed(title=kn.word, description=kn.meaning)
 				await message.channel.send("おっと、専門用語だよ。", embed=embed)
 				return
