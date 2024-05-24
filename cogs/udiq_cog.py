@@ -38,7 +38,7 @@ class UdiqCog(commands.Cog):
                 await message.channel.send("おっと、専門用語だよ。", embed=embed)
                 return
 
-    @commands.hybrid_command(name="random", description="random")
+    @commands.command(name="random", brief="show random word from udiq")
     async def random(self, ctx: commands.Context):
         knowledges = self.knowledges_controller.find_all()
         knowledge = random.choice(knowledges)
@@ -47,7 +47,7 @@ class UdiqCog(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.hybrid_command(name="add", description="add new knowledge")
+    @commands.command(name="add", brief="add new knowledge")
     async def add(self, ctx: commands.Context):
         args = ctx.message.content.replace(config.BOT_PREFIX + "add ", "").split()
         res = {}
@@ -66,7 +66,7 @@ class UdiqCog(commands.Cog):
 
         await ctx.send(embed=embed)
         
-    @commands.hybrid_command(name="list", description="show list of knowledges")
+    @commands.command(name="list", brief="show list of knowledges")
     async def _list(self, ctx: commands.Context):
         res = {}
         res["knowledges"] = self.knowledges_controller.find_all()
@@ -74,7 +74,7 @@ class UdiqCog(commands.Cog):
 
         await ctx.send(embed=embed)
     
-    @commands.hybrid_command(name="delete", description="show list of knowledges")
+    @commands.command(name="delete", brief="delete specified knowledge")
     async def delete(self, ctx: commands.Context):
         args = ctx.message.content.replace(config.BOT_PREFIX + "delete ", "").split()
         res = {}

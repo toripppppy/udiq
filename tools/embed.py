@@ -11,7 +11,7 @@ COLOR_DICT = {"white": 0xF0F0FF, "yellow": 0xFFFF00, "red": 0xFF0000, "green": 0
 
 
 def create_help_embed(bot: commands.Bot) -> discord.Embed:
-    embed = discord.Embed()
+    embed = discord.Embed(title="udiq help")
     for command in bot.all_commands.values():
         # avoid hidden commands
         if command.hidden:
