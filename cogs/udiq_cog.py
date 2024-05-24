@@ -23,15 +23,17 @@ class UdiqCog(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
+        # avoid if knowledges is empty
+        if self.knowledges is None: return
+        # avoid self message
+        if message.author.bot: return
         # avoid commands
         ctx = await self.bot.get_context(message)
         if ctx.command is not None: return
-        # avoid self message
-        if message.author.bot: return
 
         parser = Parser()
         message_words = parser.get_words(message.content)
-
+        
         for kn in self.knowledges:
             if kn.word in message_words:
                 embed = discord.Embed(title=kn.word, description=kn.meaning)
