@@ -45,7 +45,7 @@ class UdiqCog(commands.Cog):
 
         embed = discord.Embed(title=knowledge.word, description=knowledge.meaning)
 
-        await ctx.send(embed=embed, ephemeral=True)
+        await ctx.send(embed=embed)
 
     @commands.hybrid_command(name="add", description="add new knowledge")
     async def add(self, ctx: commands.Context):
@@ -64,16 +64,15 @@ class UdiqCog(commands.Cog):
 
         embed = tools.embed.create_add_embed(res)
 
-        await ctx.send(embed=embed, ephemeral=True)
+        await ctx.send(embed=embed)
         
     @commands.hybrid_command(name="list", description="show list of knowledges")
     async def _list(self, ctx: commands.Context):
-        embed = discord.Embed(
-            title="Knowledges",
-            description="あああああ"
-        )
+        res = {}
+        res["knowledges"] = self.knowledges_controller.find_all()
+        embed = tools.embed.create_list_embed(res)
 
-        await ctx.send(embed=embed, ephemeral=True)
+        await ctx.send(embed=embed)
     
     @commands.hybrid_command(name="delete", description="show list of knowledges")
     async def delete(self, ctx: commands.Context):
@@ -90,4 +89,4 @@ class UdiqCog(commands.Cog):
             res["code"] = "error.invalid"
 
         embed = tools.embed.create_delete_embed(res)
-        await ctx.send(embed=embed, ephemeral=True)
+        await ctx.send(embed=embed)
