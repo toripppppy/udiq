@@ -9,7 +9,7 @@ class MariaDBConnector:
     def __init__(self) -> None:   
         # Connect to MariaDB Platform
         try:
-            conn = mariadb.connect(
+            self.conn = mariadb.connect(
                 user="root",
                 password="udiqpass",
                 host="localhost",
@@ -17,16 +17,13 @@ class MariaDBConnector:
                 database="test"
             )
 
-            self.cursor = conn.cursor()
-
         except mariadb.Error as e:
             print(f"Error connecting to MariaDB Platform: {e}")
             sys.exit(1)
 
     # Get Cursor
     def get_cursor(self) -> mariadb.Cursor:
-        return self.cursor
+        return self.conn.cursor()
     
-    # def get_all_knowledges(self) -> tuple[tuple[str]]:
-    #     self.cursor.execute("SELECT * FROM knowledges")
-    #     return tuple([knowledge for knowledge in self.cursor])
+    def get_conn(self) -> mariadb.Connection:
+        return self.conn
