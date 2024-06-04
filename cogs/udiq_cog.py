@@ -10,7 +10,6 @@ import random
 
 from db.controllers.knowledges_controller import KnowledgesController
 from db.models.knowledge_model import KnowledgeModel
-from tools.parser import Parser
 import tools.embed
 import config
 
@@ -30,12 +29,9 @@ class UdiqCog(commands.Cog):
         # avoid commands
         ctx = await self.bot.get_context(message)
         if ctx.command is not None: return
-
-        parser = Parser()
-        message_words = parser.get_words(message.content)
         
         for kn in self.knowledges:
-            if kn.word in message_words:
+            if kn.word in message.content:
                 embed = discord.Embed(title=kn.word, description=kn.meaning)
                 await message.channel.send("おっと、専門用語だよ。", embed=embed)
                 return
